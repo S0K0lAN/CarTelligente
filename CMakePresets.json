@@ -1,0 +1,143 @@
+{
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "GCC_Presset",
+            "displayName": "GCC 15.2.1 x86_64-redhat-linux",
+            "description": "Using compilers: C = /usr/bin/gcc, CXX = /usr/bin/g++",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "/usr/bin/gcc",
+                "CMAKE_CXX_COMPILER": "/usr/bin/g++",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_PREFIX_PATH": "/usr/lib64/cmake/Qt6",
+                "Qt6_DIR": "/usr/lib64/cmake/Qt6",
+                "Qt6Core_DIR": "/usr/lib64/cmake/Qt6Core",
+                "Qt6Gui_DIR": "/usr/lib64/cmake/Qt6Gui",
+                "Qt6Qml_DIR": "/usr/lib64/cmake/Qt6Qml",
+                "Qt6Quick_DIR": "/usr/lib64/cmake/Qt6Quick",
+                "Qt6QuickControls2_DIR": "/usr/lib64/cmake/Qt6QuickControls2"
+            }
+        },
+        {
+            "name": "GCC_Presset_Release",
+            "displayName": "GCC 15.2.1 Release",
+            "description": "Release build with GCC",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "/usr/bin/gcc",
+                "CMAKE_CXX_COMPILER": "/usr/bin/g++",
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_PREFIX_PATH": "/usr/lib64/cmake/Qt6",
+                "Qt6_DIR": "/usr/lib64/cmake/Qt6",
+                "Qt6Core_DIR": "/usr/lib64/cmake/Qt6Core",
+                "Qt6Gui_DIR": "/usr/lib64/cmake/Qt6Gui",
+                "Qt6Qml_DIR": "/usr/lib64/cmake/Qt6Qml",
+                "Qt6Quick_DIR": "/usr/lib64/cmake/Qt6Quick",
+                "Qt6QuickControls2_DIR": "/usr/lib64/cmake/Qt6QuickControls2"
+            }
+        },
+        {
+            "name": "Android_arm64_v8a",
+            "displayName": "Android (ARM64-v8a)",
+            "description": "Android build for ARM64 devices using Qt 6.7+",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_SYSTEM_NAME": "Android",
+                "CMAKE_SYSTEM_VERSION": "21",
+                "CMAKE_ANDROID_ARCH_ABI": "arm64-v8a",
+                "CMAKE_ANDROID_NDK": "/opt/android-ndk-r26",
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_PREFIX_PATH": "/opt/Qt/6.7/Android/lib/cmake",
+                "Qt6_DIR": "/opt/Qt/6.7/Android/lib/cmake/Qt6",
+                "Qt6Core_DIR": "/opt/Qt/6.7/Android/lib/cmake/Qt6Core",
+                "Qt6Gui_DIR": "/opt/Qt/6.7/Android/lib/cmake/Qt6Gui",
+                "Qt6Qml_DIR": "/opt/Qt/6.7/Android/lib/cmake/Qt6Qml",
+                "Qt6Quick_DIR": "/opt/Qt/6.7/Android/lib/cmake/Qt6Quick",
+                "Qt6QuickControls2_DIR": "/opt/Qt/6.7/Android/lib/cmake/Qt6QuickControls2"
+            }
+        },
+        {
+            "name": "Android_armv7",
+            "displayName": "Android (ARMv7)",
+            "description": "Android build for ARM32 devices using Qt 6.7+",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_SYSTEM_NAME": "Android",
+                "CMAKE_SYSTEM_VERSION": "21",
+                "CMAKE_ANDROID_ARCH_ABI": "armeabi-v7a",
+                "CMAKE_ANDROID_NDK": "/opt/android-ndk-r26",
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_PREFIX_PATH": "/opt/Qt/6.7/Android/lib/cmake",
+                "Qt6_DIR": "/opt/Qt/6.7/Android/lib/cmake/Qt6",
+                "Qt6Core_DIR": "/opt/Qt/6.7/Android/lib/cmake/Qt6Core",
+                "Qt6Gui_DIR": "/opt/Qt/6.7/Android/lib/cmake/Qt6Gui",
+                "Qt6Qml_DIR": "/opt/Qt/6.7/Android/lib/cmake/Qt6Qml",
+                "Qt6Quick_DIR": "/opt/Qt/6.7/Android/lib/cmake/Qt6Quick",
+                "Qt6QuickControls2_DIR": "/opt/Qt/6.7/Android/lib/cmake/Qt6QuickControls2"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "GCC_Presset",
+            "configurePreset": "GCC_Presset",
+            "displayName": "Build Debug",
+            "description": "Build with GCC Debug configuration",
+            "jobs": 8
+        },
+        {
+            "name": "GCC_Presset_Release",
+            "configurePreset": "GCC_Presset_Release",
+            "displayName": "Build Release",
+            "description": "Build with GCC Release configuration",
+            "jobs": 8
+        },
+        {
+            "name": "Android_arm64_v8a",
+            "configurePreset": "Android_arm64_v8a",
+            "displayName": "Build Android ARM64",
+            "description": "Build for Android ARM64 devices",
+            "jobs": 8
+        },
+        {
+            "name": "Android_armv7",
+            "configurePreset": "Android_armv7",
+            "displayName": "Build Android ARMv7",
+            "description": "Build for Android ARM32 devices",
+            "jobs": 8
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "GCC_Presset"
+                },
+                {
+                    "type": "build",
+                    "name": "GCC_Presset"
+                }
+            ]
+        },
+        {
+            "name": "release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "GCC_Presset_Release"
+                },
+                {
+                    "type": "build",
+                    "name": "GCC_Presset_Release"
+                }
+            ]
+        }
+    ]
+}
