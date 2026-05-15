@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: car-metrics-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: car_metrics
+    ports:
+      - '5432:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: car-metrics-app
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/car_metrics
+      PORT: 3000
+      NODE_ENV: development
+    ports:
+      - '3000:3000'
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    volumes:
+      - .:/app
+      - /app/node_modules          # важно для производительности
+    develop:
+      watch:
+        - path: ./server.js
+          action: rebuild
+        - path: ./routes
+          action: rebuild
+        - path: ./controllers
+          action: rebuild
+
+volumes:
+  db-data:
